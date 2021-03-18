@@ -1,4 +1,4 @@
-//TODO: ver qeu tan necesaria esta linea.
+//TODO: ver qué tan necesaria esta linea.
 const { request, response } = require('express');
 
 const usersGet = (req, res) => {
