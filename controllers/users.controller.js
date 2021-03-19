@@ -1,4 +1,4 @@
-//TODO: ver qué tan necesaria esta linea.
+//TODO: ver qué tan necesaria es esta linea de código.
 const { request, response } = require('express');
 
 const usersGet = (req, res) => {
@@ -17,8 +17,10 @@ const usersPost = (req, res) => {
   });
 };
 const usersPut = (req, res) => {
+  const { id } = req.params;
   res.json({
     msg: 'put API - controller',
+    id,
   });
 };
 const usersPatch = (req, res) => {
