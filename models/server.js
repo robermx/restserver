@@ -1,17 +1,23 @@
 const express = require('express');
 const cors = require('cors');
 
+const { dbConn } = require('../database/config');
+
 class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
     //paths
     this.usersPath = '/api/users';
-
+    // Conectar a base de datos
+    this.connDB();
     // Middleware
     this.middleware();
     // Rutas de la App
     this.routes();
+  }
+  async connDB() {
+    await dbConn();
   }
   middleware() {
     // Cors
@@ -22,7 +28,7 @@ class Server {
     this.app.use(express.static('public'));
   }
   routes() {
-    this.app.use(this.usersPath, require('../routes/user.routes'));
+    this.app.use(this.usersPath, require('../routes/users.routes'));
   }
   // A este método lo llamamos desde app.js
   listen() {
