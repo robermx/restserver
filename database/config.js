@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const urlDB = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}Z@clustercafe.akx9m.mongodb.net/cafeDB`;
+const urlDB = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@clustercafe.akx9m.mongodb.net/cafeDB`;
 const dbConn = async () => {
   try {
     await mongoose.connect(urlDB, {
