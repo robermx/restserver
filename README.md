@@ -1,3 +1,6 @@
-# Base RestApi Express
+# RestApi Express Node
 
-Utilizar esta base para creación de restAPI en Express
+-CRUD de Usuarios en base de datos.
+-Autenticar Usuarios en base de datos.
+-Generación de tokens JWT
+-Validación y autorización de roles.

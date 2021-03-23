@@ -9,6 +9,7 @@ class Server {
     this.port = process.env.PORT;
     //paths
     this.usersPath = '/api/users';
+    this.authPath = '/api/auth';
     // Conectar a base de datos
     this.connDB();
     // Middleware
@@ -28,6 +29,7 @@ class Server {
     this.app.use(express.static('public'));
   }
   routes() {
+    this.app.use(this.authPath, require('../routes/auth.routes'));
     this.app.use(this.usersPath, require('../routes/users.routes'));
   }
   // A este método lo llamamos desde app.js
