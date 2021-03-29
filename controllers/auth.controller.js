@@ -73,7 +73,6 @@ const googleSingIn = async (req, res) => {
     const token = await genJWT(user.id);
 
     res.json({
-      user,
       token,
     });
   } catch (err) {
