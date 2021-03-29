@@ -1,5 +1,6 @@
 const bcryptjs = require('bcryptjs');
 const { genJWT } = require('../helpers/generate-jwt');
+const { googleVerify } = require('../helpers/google-verify');
 // Require user model
 const User = require('../models/user');
 
@@ -43,6 +44,46 @@ const login = async (req, res) => {
   }
 };
 
+const googleSingIn = async (req, res) => {
+  const { id_token } = req.body;
+  try {
+    const { nombre, email, img } = await googleVerify(id_token);
+
+    let user = await User.findOne({ email });
+    if (!user) {
+      // hay que crearlo
+      const data = {
+        nombre,
+        email,
+        password: 'googlePass',
+        img,
+        google: true,
+      };
+
+      user = new User(data);
+      await user.save();
+    }
+    if (!user.estado) {
+      return res.status(401).json({
+        msg: 'Usuario bloqueado por administrador',
+      });
+    }
+
+    // generar el jwt
+    const token = await genJWT(user.id);
+
+    res.json({
+      user,
+      token,
+    });
+  } catch (err) {
+    res.status(400).json({
+      msg: 'El token de google no es reconocido',
+    });
+  }
+};
+
 module.exports = {
   login,
+  googleSingIn,
 };
