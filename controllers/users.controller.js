@@ -1,6 +1,3 @@
-//TODO: ver qué tan necesaria es esta linea de código.
-// const { request, response } = require('express');
-
 // Encriptar password
 const bcryptjs = require('bcryptjs');
 // Require user model

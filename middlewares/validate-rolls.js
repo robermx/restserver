@@ -1,4 +1,4 @@
-const isAdminRole = (req, res, next) => {
+const isAdminRoll = (req, res, next) => {
   if (!req.user) {
     return res.status(500).json({
       msg: 'Se pretende verificar el rol, sin validar primero el token',
@@ -14,7 +14,7 @@ const isAdminRole = (req, res, next) => {
   next();
 };
 
-const hasRoll = (...roles) => {
+const hasRoll = (...rolls) => {
   return (req, res, next) => {
     if (!req.user) {
       return res.status(500).json({
@@ -22,9 +22,9 @@ const hasRoll = (...roles) => {
       });
     }
 
-    if (!roles.includes(req.user.rol)) {
+    if (!rolls.includes(req.user.rol)) {
       return res.status(401).json({
-        msg: `${req.user.nombre} sin autorización, requiere uno de estos roles ${roles}`,
+        msg: `${req.user.nombre} sin autorización, requiere uno de estos roles ${rolls}`,
       });
     }
     next();
@@ -32,6 +32,6 @@ const hasRoll = (...roles) => {
 };
 
 module.exports = {
-  isAdminRole,
+  isAdminRoll,
   hasRoll,
 };

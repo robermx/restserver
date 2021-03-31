@@ -4,12 +4,12 @@ const { check } = require('express-validator');
 const {
   validateInputs,
   validateJWT,
-  isAdminRole,
+  isAdminRoll,
   hasRoll,
 } = require('../middlewares');
 
 const {
-  isRolValid,
+  isRollValid,
   emailExist,
   existUserById,
 } = require('../helpers/db-validators');
@@ -36,7 +36,7 @@ router.post(
       'El password debe ser al menos de 8 carácteres'
     ).isLength({ min: 8 }),
     // check('rol', 'No es un rol permitido').isIn(['ADMIN_ROL', 'USER_ROL']),
-    check('rol').custom(isRolValid),
+    check('rol').custom(isRollValid),
     validateInputs,
   ],
   usersPost
@@ -46,19 +46,18 @@ router.put(
   [
     check('id', 'No es un id válido').isMongoId(),
     check('id').custom(existUserById),
-    check('rol').custom(isRolValid),
+    check('rol').custom(isRollValid),
     validateInputs,
   ],
   usersPut
 );
-router.patch('/', usersPatch);
 
 router.delete(
   '/:id',
   [
     validateJWT,
     // Solo si es ADMIN ROL
-    // isAdminRole,
+    // isAdminRoll,
     hasRoll('ADMIN_ROL', 'VENTAS_ROL'),
     check('id', 'No es un id válido').isMongoId(),
     check('id').custom(existUserById),
