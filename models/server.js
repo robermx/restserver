@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const fileUpload = require('express-fileUpload');
 
 const { dbConn } = require('../database/config');
 
@@ -13,6 +14,7 @@ class Server {
       category: '/api/category',
       products: '/api/products',
       search: '/api/search',
+      uploads: '/api/uploads',
       users: '/api/users',
     };
 
@@ -23,9 +25,12 @@ class Server {
     // Rutas de la App
     this.routes();
   }
+
+  // Conectar a base de datos
   async connDB() {
     await dbConn();
   }
+
   middleware() {
     // Cors
     this.app.use(cors());
@@ -33,12 +38,20 @@ class Server {
     this.app.use(express.json());
     // Directorio público
     this.app.use(express.static('public'));
+    // FileUpload - Carga de archivos
+    this.app.use(
+      fileUpload({
+        useTempFiles: true,
+        tempFileDir: '/tmp/',
+      })
+    );
   }
   routes() {
     this.app.use(this.paths.auth, require('../routes/auth.routes'));
     this.app.use(this.paths.category, require('../routes/category.routes'));
     this.app.use(this.paths.products, require('../routes/products.routes'));
     this.app.use(this.paths.search, require('../routes/search.routes'));
+    this.app.use(this.paths.uploads, require('../routes/uploads.routes'));
     this.app.use(this.paths.users, require('../routes/users.routes'));
   }
   // A este método lo llamamos desde app
