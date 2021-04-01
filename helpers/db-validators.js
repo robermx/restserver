@@ -40,10 +40,22 @@ const productExistById = async (id) => {
   }
 };
 
+// Validar colecciones
+const allowedCollections = (collection, collections) => {
+  const include = collections.includes(collection);
+  if (!include) {
+    throw new Error(
+      `La coleción: ${collection} no es permitida - ${collections}`
+    );
+  }
+  return true;
+};
+
 module.exports = {
   isRollValid,
   emailExist,
   existUserById,
   categoryExistById,
   productExistById,
+  allowedCollections,
 };
