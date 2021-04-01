@@ -6,6 +6,6 @@ const { loadFile } = require('../controllers/uploads.controller');
 
 const router = Router();
 
-router.post('/', loadFile);
+router.post('/', [validateInputs], loadFile);
 
 module.exports = router;

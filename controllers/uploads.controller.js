@@ -7,30 +7,21 @@ const loadFile = async (req, res) => {
     });
   }
 
-  //Extraer file de req.files
-  const { file } = req.files;
-
-  // Extraer la extensión
-  const cutName = file.name.split('.');
-  const extension = cutName[cutName.length - 1];
-
   // Extensiones validas
-  const validExt = ['jpg', 'jpeg', 'png', 'webp'];
+  const validExt = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
   const folder = 'img';
+  try {
+    // Imágenes
+    const finalFile = await uploadFiles(req.files, validExt, folder);
 
-  //validar extensiones
-  if (!validExt.includes(extension)) {
+    res.json({
+      finalFile,
+    });
+  } catch (msg) {
     return res.status(400).json({
-      msg: `${extension} no es válida - utiliza ${validExt}`,
+      msg,
     });
   }
-
-  // Imágenes
-  const finalFile = await uploadFiles(folder, extension, file);
-
-  res.json({
-    finalFile,
-  });
 };
 
 module.exports = {
