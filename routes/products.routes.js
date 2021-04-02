@@ -67,7 +67,6 @@ router.delete(
     validateJWT,
     hasRoll('ADMIN_ROL'),
     check('id', 'no existe este id en la base de datos').isMongoId(),
-    // TODO: validateInputs, es necesario?
     check('id').custom(productExistById),
     validateInputs,
   ],

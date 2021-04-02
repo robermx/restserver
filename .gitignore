@@ -3,4 +3,6 @@ node_modules/
 .DS_Store
 .env
 .vscode
-uploads/!readme.md
+uploads/products/
+uploads/users/
+uploads/img/
