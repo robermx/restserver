@@ -11,4 +11,7 @@
 - CRUD de categorías y productos
 - Populate: usuarios, categorías y productos
 - Búsquedas: colecciones y términos
+- Carga, validación y reubicación de archivos
+- Actualización de imágenes - usuarios y productos
+- Servicio para mostrar y proteger imágenes - Cloudinary SDK
 ```
