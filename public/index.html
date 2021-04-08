@@ -1,48 +1,40 @@
 <!DOCTYPE html>
+
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="google-signin-client_id" content="367442652803-b3bjlhonnens6q87dk65hu1p49sne5kt.apps.googleusercontent.com">
-    <title>Gogle SingIn</title>
-  </head>
-  <body>
-    <header>
-      <h1>Google SingIn</h1>
-      <hr>
-      <h2>Bienvenido</h2>
-      <div class="g-signin2" data-onsuccess="onSignIn"></div>
-      <a href="#" onclick="signOut();">Sign out</a>
-    </header>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script>
-      var url = (window.location.hostname.includes('localhost'))
-        ? 'http://localhost:8080/api/auth/google'
-        : 'https://restserver-rob.herokuapp.com/api/auth/google';
-      function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-        var id_token = googleUser.getAuthResponse().id_token;
-        const data = {id_token};
-        fetch( url, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(data)
-        })
-        .then(resp => resp.json())
-        .then(data => console.log('server', data))
-        .catch(console.log());
-      }
-      function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-          console.log('User signed out.');
-        });
-      }
-    </script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google-signin-client_id" content="367442652803-b3bjlhonnens6q87dk65hu1p49sne5kt.apps.googleusercontent.com">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <title>Restserver Login</title>
+</head>
+<body>
+  <header class="bg-primary">
+    <div class="container py-3">
+      <h1 class="text-white">Ingresar a Restserver</h1>
+    </div>
+  </header>
+  <section class="container mt-3">
+    <div class="row">
+      <div class="col-sm-6">
+        <h2>Google Sign in</h2>
+        <hr>
+        <div class="g-signin2 mb-3" data-onsuccess="onSignIn"></div>
+        <a class="btn-sm" href="#" onclick="signOut();">Sign out</a>
+      </div>
+      <div class="col-sm-6">
+        <h2>Login Email</h2>
+        <hr>
+        <form class="d-grid" id="login">
+          <input type="text" name="email" class="form-control mb-2" placeholder="Correo"> 
+          <input type="text" name="password" class="form-control mb-2" placeholder="Password">
+          <button type="submit" class="btn btn-primary">Ingresar</button>
+        </form>
+      </div>
+    </div>
+  </section>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="js/auth.js"></script>
+</body>
 </html>
