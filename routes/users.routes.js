@@ -35,7 +35,6 @@ router.post(
       'password',
       'El password debe ser al menos de 8 carácteres'
     ).isLength({ min: 8 }),
-    // check('rol', 'No es un rol permitido').isIn(['ADMIN_ROL', 'USER_ROL']),
     check('rol').custom(isRollValid),
     validateInputs,
   ],

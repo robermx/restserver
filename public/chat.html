@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body>
+  <header class="bg-dark">
+    <div class="container py-3">
+      <h1 class="text-white">Chat</h1>
+    </div>
+  </header>
+  <section>
+    <div class="container">
+      <div class="row mt-4">
+        <div class="col-sm-6">
+          <h2>Enviar mensaje</h2>
+          <hr>
+          <input type="text" id="txtUid" class="form-control mb-2" placeholder="uid" autocomplete="off">
+          <input type="text" id="txtMsg" class="form-control mb-2" placeholder="Mensaje" autocomplete="off">
+          <h3>Usuarios</h3>
+          <hr>
+          <ul id="ulUsers"></ul>
+        </div>
+        <div class="col-sm-6">
+          <h2>Chat Completo</h2>
+          <hr>
+          <ul id="ulMsg"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="container">
+    <button id="btnLogout" class="btn btn-outline-danger">logout</button>
+  </div>
+  <script src="./socket.io/socket.io.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

@@ -27,7 +27,7 @@ const login = async (req, res) => {
     const validPassword = bcryptjs.compareSync(password, user.password);
     if (!validPassword) {
       return res.status(400).json({
-        msg: 'Usuario o password incorrectos - password mal escrito',
+        msg: 'Usuario o password incorrectos - password',
       });
     }
     // generar el jwt
@@ -69,7 +69,7 @@ const googleSingIn = async (req, res) => {
       });
     }
 
-    // generar el jwt
+    // generar el JWT
     const token = await genJWT(user.id);
 
     res.json({
@@ -82,7 +82,19 @@ const googleSingIn = async (req, res) => {
   }
 };
 
+// Renovar JWT
+const renovateJWT = async (req, res) => {
+  const { user } = req;
+  // generar el JWT
+  const token = await genJWT(user.id);
+  res.json({
+    user,
+    token,
+  });
+};
+
 module.exports = {
   login,
   googleSingIn,
+  renovateJWT,
 };
