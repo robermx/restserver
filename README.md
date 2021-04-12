@@ -14,4 +14,6 @@
 - Carga, validación y reubicación de archivos
 - Actualización de imágenes - usuarios y productos
 - Servicio para mostrar y proteger imágenes - Cloudinary SDK
+- Integracion de chat con socket.io
+- Usar JWT para validar Sockets
 ```
