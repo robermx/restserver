@@ -25,7 +25,7 @@ class ChatMsgs {
 
   // Enviar Mensaje
   sendMsg(uid, name, msg) {
-    this.msg.unshift(new Message(uid, name, msg));
+    this.messages.unshift(new Message(uid, name, msg));
   }
 
   // Agregar Usuario al array

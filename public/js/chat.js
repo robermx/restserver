@@ -50,20 +50,19 @@ const connectSocket = async () => {
     console.log('socket offline');
   });
 
-  // Escuchar mensajes
-  socket.on('recive-msg', () => {
-    // TODO:
-  });
-
-  // Escuchar un mensaje privado
-  socket.on('private-msg', () => {
-    // TODO:
-  });
-
   // Escuchar usuarios activos
   socket.on('active-users', drawUsers);
+
+  // Escuchar mensajes
+  socket.on('recive-msg', drawMsgs);
+
+  // Escuchar un mensaje privado
+  socket.on('private-msg', (payload) => {
+    console.log(payload);
+  });
 };
 
+// Ver usuarios conectados
 const drawUsers = (users) => {
   let usersHTML = '';
   users.forEach(({ nombre, uid }) => {
@@ -77,9 +76,50 @@ const drawUsers = (users) => {
   ulUsers.innerHTML = usersHTML;
 };
 
+// Ver los mensajes de chat
+const drawMsgs = (msgs) => {
+  let msgsHTML = '';
+  msgs.forEach(({ name, msg }) => {
+    msgsHTML += `
+      <li>
+        <p class="text-primary mb-0">${name}:
+          <small class="text-muted mb-2">${msg}</small>
+        </p>
+      </li>
+    `;
+  });
+  ulMsg.innerHTML = msgsHTML;
+};
+
+// Enviar mensaje
+txtMsg.addEventListener('keyup', ({ keyCode }) => {
+  const msg = txtMsg.value;
+  const uid = txtUid.value;
+  if (keyCode !== 13) return;
+  if (msg.length === 0) return;
+
+  socket.emit('sendMsg', { msg, uid });
+  txtMsg.value = '';
+});
+
+btnLogout.addEventListener('click', () => {
+  localStorage.removeItem('token');
+
+  const auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(() => {
+    console.log('User signed out.');
+    window.location = 'index.html';
+  });
+});
+
 const main = async () => {
   // Validar JWT token
   await validateJWT();
 };
 
-main();
+(() => {
+  gapi.load('auth2', () => {
+    gapi.auth2.init();
+    main();
+  });
+})();
